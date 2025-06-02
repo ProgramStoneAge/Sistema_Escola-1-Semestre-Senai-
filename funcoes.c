@@ -7,13 +7,6 @@
 #include <locale.h>
 #include <windows.h>
 
-Aluno alunos[MAX_ALUNOS] = {0};
-int dia, mes, ano, opcao,opcaog, matricula, cursos = 0, totalAlunos = 0, m = 1;
-char materia[99],nome[50], solicitar_e[99], ADM[10] = "ridis", ADMS[10] = "123";
-bool opcaoin2 = true, admin = false;
-// main variaveis
-int p=0,i=0,opc4,opp4,opf = 0;
-char adn[8], ads[8];
 
 void exibirAlunos(){
     int opea = 0;
@@ -141,17 +134,7 @@ void vernotas(){
     }while (option_extra == 0);
 }
 
-void cadastro(){
-    int i = 0;
-    if(admin == true){
-        system("cls");
-        printf("Quantos Alunos Deseja Cadastrar?: ");
-        scanf("%d",&m);
-    }
-    for(i; i < m; i++){
-    	char nome_arquivo[100];
-
-        limparBuffer();
+();
         int opf = 0;
         char dtn[99];
         if(admin == true){
