@@ -1,17 +1,64 @@
-# Sistema_Escola-1-Semestre-Senai-
-Sistema feito durante o primeiro Semestre de Logica de Programação. PROF: Ridis PR
+# 📚 Sistema Escolar - 1º Semestre SENAI
 
-// REQUISITOS //
-1. SO: Windows versão 94+
-2. ARMAZENAMENTO: 123kb
-3. RAM: 100kb
-4. Compilador MINGW GCC
+Projeto desenvolvido durante o **primeiro semestre** da disciplina de **Lógica de Programação**.  
+👨‍🏫 **Professor:** Ridis PR
 
-// INSTRUÇÕES DE EXECUÇÃO //
-1. Para devs: Todos os 3 arquivos (funcoes.c // main.c // declaracoes.h) devem estar na mesma pasta
-2. Para Usuários: Executar o programa.exe
-3. Para Devs e Usuários: Dados dos alunos são salvos em arquivos .txt no mesmo local do programa.exe ou dos 3 arquivos(funcoes.c // main.c // declaracoes.h).
-4. Programa.exe Pode ser acusado como Virus ou Malware no windows por conta do salvamento de arquivos de texto, desative o anti-virus para execução
-5. O Terminal a ser executado pode está em padrões diferentes do UTF-8 podendo causar erros na acentuação altere seu terminal para UTF-8
-6. Para Devs: Caso esteja usando a IDE DevC++ crie um novo projeto sem arquivo main.c e depois inclua no projeto os 3 arquivos(funcoes.c // main.c // declaracoes.h) para que compile todos e funcione corretamente
-7. Para Devs: Caso esteja usando a IDE Visual Studio Code compile os 3 arquivos(funcoes.c // main.c // declaracoes.h) no terminal (utilizando o compilador GCC que é padrão do C ansi) digite: gcc main.c funcoes.c -o programa.exe
+---
+
+## ✅ Requisitos do Sistema
+
+🖥️ **Sistema Operacional:** Windows 94+  
+💾 **Armazenamento:** 123 KB  
+🧠 **Memória RAM:** 100 KB  
+🛠️ **Compilador:** MinGW GCC
+
+---
+
+## 🚀 Instruções de Execução
+
+### 👨‍💻 Para Desenvolvedores
+
+1. Certifique-se de que os **3 arquivos** estejam na mesma pasta:
+   - `main.c`
+   - `funcoes.c`
+   - `declaracoes.h`
+
+2. Se estiver utilizando **DevC++**:
+   - Crie um novo projeto **sem** arquivo `main.c`
+   - Inclua manualmente os 3 arquivos mencionados acima no projeto
+
+3. Se estiver utilizando **Visual Studio Code**:
+   - Compile via terminal com o comando:
+     ```bash
+     gcc main.c funcoes.c -o programa.exe
+     ```
+
+### 👥 Para Usuários
+
+- Execute diretamente o arquivo **`programa.exe`**
+
+---
+
+## 📂 Sobre os Dados
+
+📁 Os dados dos alunos são salvos em arquivos `.txt` no **mesmo diretório** do `programa.exe` ou dos arquivos fonte (`main.c`, `funcoes.c`, `declaracoes.h`).
+
+---
+
+## ⚠️ Avisos Importantes
+
+- 🛡️ O Windows pode acusar o `programa.exe` como **vírus ou malware** devido à manipulação de arquivos `.txt`.  
+  ➤ **Desative temporariamente o antivírus** para executar.
+
+- 🧾 O terminal pode não estar com o padrão **UTF-8**, o que pode causar **erros de acentuação**.  
+  ➤ **Configure seu terminal para UTF-8**.
+
+---
+
+## 🧠 Observações Finais
+
+Este sistema é simples e didático, ideal para praticar lógica, modularização e manipulação de arquivos em C.
+
+---
+
+📌 *Projeto acadêmico - SENAI | Lógica de Programação*
