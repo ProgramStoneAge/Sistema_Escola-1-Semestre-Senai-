@@ -3,7 +3,7 @@ Sistema feito durante o primeiro Semestre de Logica de Programação. PROF: Ridi
 
 // REQUISITOS //
 1. SO: Windows versão 94+
-2. ARNAZENAMENTO: 123kb
+2. ARMAZENAMENTO: 123kb
 3. RAM: 100kb
 4. Compilador MINGW GCC
 
