@@ -1,5 +1,5 @@
 # Sistema_Escola-1-Semestre-Senai-
-Sistema feito durante o primeiro Semestre de Logica de Programação. PROF: Ridis Pereira Ribeiro
+Sistema feito durante o primeiro Semestre de Logica de Programação. PROF: Ridis PR
 
 // REQUISITOS //
 1. SO: Windows versão 94+
