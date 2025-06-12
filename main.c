@@ -1,4 +1,3 @@
-main.c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,19 +8,19 @@ main.c
 #include "declaracoes.h"
 
 int main(){
-    setlocale(LC_CTYPE, "portuguese");
+    setlocale(LC_ALL, "portuguese");
     int opcaoin = 0;
     char op_cadastro;
     do{
         while (opcaoin == 0)
         {                    
             printf("\n========== MENU ESCOLA ==========\n");
-            printf("Op?ão Desejada?\n >>[C]Cadastro<< || >>Login<< || >>[A]ADM\n");
+            printf("Opção Desejada?\n >>[C]Cadastro<< || >>Login<< || >>[A]ADM\n");
             op_cadastro = getchar();
             switch (op_cadastro)
             {
                 case 'l':
-                    printf("Op��o Secreta Ativada..\nAutoDestrui��o do Pc Inciada...");
+                    printf("Opção Secreta Ativada..\nAutoDestruição do Pc Inciada...");
                     Sleep(4000);
                     system("cls");
                 break;
@@ -67,7 +66,7 @@ int main(){
         else if(admin == true){
             system("cls");
             printf("----------------Portal Do Administrador---------------\n\n");
-            printf("[1] ||Lan�ar Notas||\n"); 
+            printf("[1] ||Lançar Notas||\n"); 
             printf("[2] ||Cadastrar Alunos||\n");
             printf("[3] ||Editar Cadastros||\n");
             printf("[4] ||Listar Alunos||\n");
@@ -106,7 +105,7 @@ int main(){
                     }
                     else{
                         if(alunos[0].nome[0] == '\0'){
-                            printf("� Necessario Mais de um aluno para isto");
+                            printf("É Necessario Mais de um aluno para isto");
                             Sleep(4000);
                         }
                         else{                          
@@ -126,7 +125,7 @@ int main(){
                     }
                     else{
                         if(alunos[0].nome[0] == '\0'){
-                            printf("� Necessario Mais de um aluno para isto");
+                            printf("É Necessario Mais de um aluno para isto");
                             Sleep(4000);
                         }
                         else{
@@ -145,7 +144,7 @@ int main(){
                     opc4 = 5;
                     break;
                 default:
-                    printf("Op��o Invalida");
+                    printf("Opção Invalida");
                 break;
         }
     }while (opc4 != 5);
