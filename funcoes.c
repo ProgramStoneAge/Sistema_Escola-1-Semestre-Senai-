@@ -15,31 +15,42 @@ bool opcaoin2 = true, admin = false;
 int p=0,i=0,opc4,opp4,opf = 0,id_aluno;
 char adn[8], ads[8];
 
-void exibirAlunos(){
-	setlocale(LC_ALL, "portuguese");
-    int opea = 0;
-    printf("\nNome: %s",alunos[id_aluno].nome);
-    printf("\nData De Nascimento: %s",alunos->DataNascimento);   
-    printf("\nEndere?o: %s",alunos->endereco);   
-    printf("\nTelefone: %s",alunos->telefone);   
-    printf("\nCurso: %s",alunos->curso_do_aluno);   
-    printf("\nRA: %s",alunos->matricula);
-    printf("\nTurma: %d",alunos[id_aluno].turma[1]);
-    printf("\n>>Para Voltar[1]<<\n");
-    scanf("%d",&opea);
-    if(opea == 1){
-        opcaoin2 = false;
+void exibirAlunos() {
+    setlocale(LC_ALL, "portuguese");
+    if (id_aluno < 0 || id_aluno >= m || alunos[id_aluno].nome[0] == '\0') {
+        printf("Aluno inválido ou não cadastrado.\n");
+        Sleep(2000);
+        system("cls");
+        return;
+    }
+
+    printf("\nNome: %s", alunos[id_aluno].nome);
+    printf("\nData de Nascimento: %s", alunos[id_aluno].DataNascimento);
+    printf("\nEndereço: %s", alunos[id_aluno].endereco);
+    printf("\nTelefone: %s", alunos[id_aluno].telefone);
+    printf("\nCurso: %s", alunos[id_aluno].curso_do_aluno);
+    printf("\nRA: %s", alunos[id_aluno].matricula);
+    printf("\nTurma: %d", alunos[id_aluno].turma[0]); // Ajustado para turma[0]
+    printf("\n>>Para Voltar [1]<<\n");
+
+    int opea;
+    scanf("%d", &opea);
+    if (opea == 1) {
         system("cls");
     }
 }
 
 void ordenarAlunosPorNome() {
-	setlocale(LC_ALL, "portuguese");
-    Aluno temp;
-    int i, j;
+    setlocale(LC_ALL, "portuguese");
+    if (m <= 0) {
+        printf("Nenhum aluno cadastrado.\n");
+        Sleep(2000);
+        return;
+    }
 
-    for (i = 0; i < m - 1; i++) {
-        for (j = 0; j < m - i - 1; j++) {
+    Aluno temp;
+    for (int i = 0; i < m - 1; i++) {
+        for (int j = 0; j < m - i - 1; j++) {
             if (strcmp(alunos[j].nome, alunos[j + 1].nome) > 0) {
                 temp = alunos[j];
                 alunos[j] = alunos[j + 1];
@@ -49,377 +60,396 @@ void ordenarAlunosPorNome() {
     }
 
     printf("\nAlunos ordenados por nome:\n");
-    for (i = 0; i < m; i++) {
-        printf("Aluno[%d]: %s\n", i, alunos[i].nome);
+    for (int i = 0; i < m; i++) {
+        if (alunos[i].nome[0] != '\0') {
+            printf("Aluno[%d]: %s\n", i, alunos[i].nome);
+        }
     }
+    printf("\nPressione qualquer tecla para voltar...\n");
+    getchar();
+    scanf("%*c");
 }
 
 void adicionarmaterias(int i) {
-	setlocale(LC_ALL, "portuguese");
+    setlocale(LC_ALL, "portuguese");
+    if (i < 0 || i >= MAX_ALUNOS || alunos[i].nome[0] == '\0') {
+        printf("Aluno inválido.\n");
+        return;
+    }
+
     if (strcmp(alunos[i].curso_do_aluno, "[TC.TI]Desenvolvimento de Sistemas") == 0) {
-        strcpy(alunos[i].materias[1], "TC.TI = Logica de Programa  o");
-        strcpy(alunos[i].materias[2], "TC.TI = Eletro Eletronica");
-        strcpy(alunos[i].materias[3], "TC.TI = Idealiza  o De Projetos");
+        strcpy(alunos[i].materias[0], "TC.TI = Lógica de Programação");
+        strcpy(alunos[i].materias[1], "TC.TI = Eletro Eletrônica");
+        strcpy(alunos[i].materias[2], "TC.TI = Idealização de Projetos");
     } else if (strcmp(alunos[i].curso_do_aluno, "[SOLD]Soldagem") == 0) {
-        strcpy(alunos[i].materias[1], "SOLD = Introdu  o a Soldagem");
-        strcpy(alunos[i].materias[2], "SOLD = Seguran a na Soldagem");
-        strcpy(alunos[i].materias[3], "SOLD = Leitura e Interpreta  o de Desenho T cnico");
+        strcpy(alunos[i].materias[0], "SOLD = Introdução à Soldagem");
+        strcpy(alunos[i].materias[1], "SOLD = Segurança na Soldagem");
+        strcpy(alunos[i].materias[2], "SOLD = Leitura e Interpretação de Desenho Técnico");
     } else if (strcmp(alunos[i].curso_do_aluno, "[ELET.T]Eletrotecnico") == 0) {
-        strcpy(alunos[i].materias[1], "ELET.T = Fundamentos de Eletricidade");
-        strcpy(alunos[i].materias[2], "ELET.T = Seguran a em Instala  es El tricas");
-        strcpy(alunos[i].materias[3], "ELET.T = Eletr nica B sica");
-    } else if (strcmp(alunos[i].curso_do_aluno, "[MECA]Mecatr nica") == 0) {
-        strcpy(alunos[i].materias[1], "MECA = Seguran a do Trabalho");
-        strcpy(alunos[i].materias[2], "MECA = Fundamentos de Automa  o Industrial");
-        strcpy(alunos[i].materias[3], "MECA = Uso de EPIs e EPCs");
+        strcpy(alunos[i].materias[0], "ELET.T = Fundamentos de Eletricidade");
+        strcpy(alunos[i].materias[1], "ELET.T = Segurança em Instalações Elétricas");
+        strcpy(alunos[i].materias[2], "ELET.T = Eletrônica Básica");
+    } else if (strcmp(alunos[i].curso_do_aluno, "[MECA]Mecatrônica") == 0) {
+        strcpy(alunos[i].materias[0], "MECA = Segurança do Trabalho");
+        strcpy(alunos[i].materias[1], "MECA = Fundamentos de Automação Industrial");
+        strcpy(alunos[i].materias[2], "MECA = Uso de EPIs e EPCs");
     } else {
-        printf("Curso Selecionado n o corresponde\n");
+        printf("Curso selecionado não corresponde.\n");
     }
 }
 
-float calcularnotas(){
-	setlocale(LC_ALL, "portuguese");
-    float clc = 0;
-    srand(time(NULL));
-    if(alunos[8].notas[1] == 0){
-        alunos[8].notas[1] = rand() % 11;
-        alunos[8].notas[2] = rand() % 11;
-        alunos[8].notas[3] = rand() % 11;
+float calcularnotas(int aluno_idx) {
+    setlocale(LC_ALL, "portuguese");
+    if (aluno_idx < 0 || aluno_idx >= m || alunos[aluno_idx].nome[0] == '\0') {
+        printf("Aluno inválido.\n");
+        return 0.0;
     }
-    float nota1 = alunos[8].notas[1];
-    float nota2 = alunos[8].notas[2];
-    float nota3 = alunos[8].notas[3];
-    clc = (nota1 + nota2 + nota3) /3;
-    return clc;
+
+    // Inicializar notas apenas uma vez, se necessário
+    if (alunos[aluno_idx].notas[0] == 0 && alunos[aluno_idx].notas[1] == 0 && alunos[aluno_idx].notas[2] == 0) {
+        alunos[aluno_idx].notas[0] = rand() % 11;
+        alunos[aluno_idx].notas[1] = rand() % 11;
+        alunos[aluno_idx].notas[2] = rand() % 11;
+    }
+
+    float nota1 = alunos[aluno_idx].notas[0];
+    float nota2 = alunos[aluno_idx].notas[1];
+    float nota3 = alunos[aluno_idx].notas[2];
+    return (nota1 + nota2 + nota3) / 3.0;
 }
 
-void lancar_notas(){
-	setlocale(LC_ALL, "portuguese");
+void lancar_notas() {
+    setlocale(LC_ALL, "portuguese");
     system("cls");
-    int opc = 0;
-    int i = 0;
-    if(alunos[0].nome[0] == '\0'){
-        printf("? Necess rio Mais de um aluno para isto");
-        Sleep(4000);
+    if (m <= 0) {
+        printf("É necessário pelo menos um aluno cadastrado.\n");
+        Sleep(2000);
+        return;
     }
-    else{
-        printf("De Qual Aluno Deseja Lan ar Notas? Digite o Numero Correspondente\n");
-        for(i; i < m; i++){
-            printf("\nAluno[%d]: %s",i,alunos[i].nome);
-        }
-        printf("\n");
-        scanf("%d",&opc);
-        printf("\nDigite a Nota 1: ");
-        scanf("%f",&alunos[opc].notas[1]);
-        printf("\nDigite a Nota 2: ");
-        scanf("%f",&alunos[opc].notas[2]);
-        printf("\nDigite a Nota 3: ");
-        scanf("%f",&alunos[opc].notas[3]);
-    }
-}
 
-void vernotas(){
-	setlocale(LC_ALL, "portuguese");
+    printf("De qual aluno deseja lançar notas? Digite o número correspondente:\n");
+    for (int i = 0; i < m; i++) {
+        printf("Aluno[%d]: %s\n", i, alunos[i].nome);
+    }
+    int opc;
+    scanf("%d", &opc);
+    if (opc < 0 || opc >= m || alunos[opc].nome[0] == '\0') {
+        printf("Aluno inválido.\n");
+        Sleep(2000);
+        return;
+    }
+
+    printf("Digite a Nota 1: ");
+    scanf("%f", &alunos[opc].notas[0]);
+    printf("Digite a Nota 2: ");
+    scanf("%f", &alunos[opc].notas[1]);
+    printf("Digite a Nota 3: ");
+    scanf("%f", &alunos[opc].notas[2]);
+    printf("Notas lançadas com sucesso.\n");
+    Sleep(2000);
     system("cls");
-    float clc2 = calcularnotas();
-    int option_extra = 0;
-    do{
-        printf("------NOTAS------\n");
-        printf("%s\n\n",alunos->curso_do_aluno);
-        printf("Em: %s no M dulo 1 sua nota foi: %.2f\n",alunos->materias[1], alunos[8].notas[1]);
-        printf("Em: %s no M dulo 2 sua nota foi: %.2f\n",alunos->materias[2], alunos[8].notas[2]);
-        printf("Em: %s no M dulo 3 sua nota foi: %.2f\n",alunos->materias[3], alunos[8].notas[3]);
-        if(clc2 >= 7.0){
-            printf("\nSua M dia foi: %.2f Parabens! Voce Foi Aprovado\n",clc2);
-        }
-        else if(clc2 >= 5.0){
-            printf("\nSua M dia foi: %.2f Voc  est  em Recupera  o, a data para a reavalia  o ser? 03/10/2025\n",clc2);
-        }
-        else{
-            printf("\nSua M dia foi: %.2f Voc  Reprovou, Contate A Secretaria\n",clc2);
-        }
-        printf(">>Pessione [1] Para Voltar<<\n");
-        scanf("%d",&option_extra);
-        if(option_extra == 1){
-            option_extra = 1;
-            system("cls");
-        }
-    }while (option_extra == 0);
 }
 
-void cadastro(){
-	setlocale(LC_ALL, "portuguese");
-    int i = 0,j = 0;
-    if(admin == true){
+void vernotas() {
+    setlocale(LC_ALL, "portuguese");
+    system("cls");
+    if (id_aluno < 0 || id_aluno >= m || alunos[id_aluno].nome[0] == '\0') {
+        printf("Aluno inválido.\n");
+        Sleep(2000);
+        return;
+    }
+
+    float media = calcularnotas(id_aluno);
+    printf("------NOTAS------\n");
+    printf("%s\n\n", alunos[id_aluno].curso_do_aluno);
+    printf("Em: %s no Módulo 1 sua nota foi: %.2f\n", alunos[id_aluno].materias[0], alunos[id_aluno].notas[0]);
+    printf("Em: %s no Módulo 2 sua nota foi: %.2f\n", alunos[id_aluno].materias[1], alunos[id_aluno].notas[1]);
+    printf("Em: %s no Módulo 3 sua nota foi: %.2f\n", alunos[id_aluno].materias[2], alunos[id_aluno].notas[2]);
+
+    if (media >= 7.0) {
+        printf("\nSua média foi: %.2f. Parabéns! Você foi aprovado.\n", media);
+    } else if (media >= 5.0) {
+        printf("\nSua média foi: %.2f. Você está em recuperação. A data para reavaliação será 03/10/2025.\n", media);
+    } else {
+        printf("\nSua média foi: %.2f. Você reprovou. Contate a secretaria.\n", media);
+    }
+
+    printf(">>Pressione [1] para voltar<<\n");
+    int option_extra;
+    scanf("%d", &option_extra);
+    if (option_extra == 1) {
         system("cls");
-        printf("Quantos Alunos Deseja Cadastrar?: ");
-        scanf("%d",&m);
     }
-    for(i = 0; i < m; i++){
-    	char nome_arquivo[100];
-        char nome_base[50];
+}
 
-        int opf = 0;
-        char dtn[99];
-        if(admin == true){
-            printf("\nAluno [%d]\n",i);
+void cadastro() {
+    setlocale(LC_ALL, "portuguese");
+    system("cls");
+    if (admin == true) {
+        printf("Quantos alunos deseja cadastrar? (Máximo %d): ", MAX_ALUNOS - m);
+        scanf("%d", &m);
+        if (m <= 0 || m + totalAlunos > MAX_ALUNOS) {
+            printf("Número de alunos inválido ou excede o limite.\n");
+            Sleep(2000);
+            system("cls");
+            return;
         }
-        getchar();
-        id_aluno = i;
+    } else {
+        m = 1; // Cadastra apenas 1 aluno se não for admin
+    }
 
-        printf("Digite O Nome Completo: ");
-        fgets(alunos[i].nome, sizeof(alunos[i].nome), stdin);
-        alunos[i].nome[strcspn(alunos[i].nome, "\n")] = 0;
-        
-        strcpy(nome_base, alunos[i].nome);
-        snprintf(nome_arquivo, sizeof(nome_arquivo), "%s.txt", nome_base);
+    for (int i = 0; i < m; i++) {
+        char nome_arquivo[100];
+        system("cls");
+        printf("\nAluno [%d]\n", i);
+        id_aluno = i + totalAlunos;
 
+        printf("Digite o nome completo: ");
+        getchar(); // Limpar buffer
+        fgets(alunos[id_aluno].nome, sizeof(alunos[id_aluno].nome), stdin);
+        alunos[id_aluno].nome[strcspn(alunos[id_aluno].nome, "\n")] = 0;
+
+        snprintf(nome_arquivo, sizeof(nome_arquivo), "%s.txt", alunos[id_aluno].nome);
         FILE *arquivo = fopen(nome_arquivo, "w");
         if (arquivo == NULL) {
             printf("Erro ao criar o arquivo %s\n", nome_arquivo);
             continue;
         }
-        fprintf(arquivo,"Nome: %s\n",alunos[i].nome);
+        fprintf(arquivo, "Nome: %s\n", alunos[id_aluno].nome);
 
-        printf("\nDigite A Senha: " );
-        fgets(alunos[i].senha, sizeof(alunos[i].senha), stdin);
-        alunos[i].senha[strcspn(alunos[i].senha, "\n")] = 0;
-        fprintf(arquivo, "Senha: %s\n", alunos[i].senha);
+        printf("Digite a senha: ");
+        fgets(alunos[id_aluno].senha, sizeof(alunos[id_aluno].senha), stdin);
+        alunos[id_aluno].senha[strcspn(alunos[id_aluno].senha, "\n")] = 0;
+        fprintf(arquivo, "Senha: %s\n", alunos[id_aluno].senha);
 
-        printf("\nDigite O Endere o: ");
-        fgets(alunos[i].endereco, sizeof(alunos[i].endereco), stdin);
-        alunos[i].endereco[strcspn(alunos[i].endereco, "\n")] = 0;
-        fprintf(arquivo, "Endereco: %s\n", alunos[i].endereco);
+        printf("Digite o endereço: ");
+        fgets(alunos[id_aluno].endereco, sizeof(alunos[id_aluno].endereco), stdin);
+        alunos[id_aluno].endereco[strcspn(alunos[id_aluno].endereco, "\n")] = 0;
+        fprintf(arquivo, "Endereço: %s\n", alunos[id_aluno].endereco);
 
-        printf("\nDigite O Telefone: ");
-        fgets(alunos[i].telefone, sizeof(alunos[i].telefone), stdin);
-        alunos[i].telefone[strcspn(alunos[i].telefone, "\n")] = 0;
-        fprintf(arquivo, "Telefone: %s\n", alunos[i].telefone);
-        char buf[16];
+        printf("Digite o telefone: ");
+        fgets(alunos[id_aluno].telefone, sizeof(alunos[id_aluno].telefone), stdin);
+        alunos[id_aluno].telefone[strcspn(alunos[id_aluno].telefone, "\n")] = 0;
+        fprintf(arquivo, "Telefone: %s\n", alunos[id_aluno].telefone);
 
-        printf("Digite sua Data de Nascimento\n");
-
+        printf("Digite a data de nascimento\n");
         printf("Dia: ");
-        if (fgets(buf, sizeof(buf), stdin) == NULL || sscanf(buf, "%d", &dia) != 1) {
-            printf("Entrada inv lida para o dia.\n");
-            fclose(arquivo);
-            continue;
-        }
-
-        printf("M s: ");
-        if (fgets(buf, sizeof(buf), stdin) == NULL || sscanf(buf, "%d", &mes) != 1) {
-            printf("Entrada inv lida para o m s.\n");
-            fclose(arquivo);
-            continue;
-        }
-
+        scanf("%d", &dia);
+        printf("Mês: ");
+        scanf("%d", &mes);
         printf("Ano: ");
-        if (fgets(buf, sizeof(buf), stdin) == NULL || sscanf(buf, "%d", &ano) != 1) {
-            printf("Entrada inv lida para o ano.\n");
-            fclose(arquivo);
-            continue;
-        }
-        
-        snprintf(dtn, sizeof(dtn), "%02d.%02d.%04d", dia, mes, ano);
-        strcpy(alunos[i].DataNascimento, dtn);
-
-        fprintf(arquivo, "Data de Nascimento: %s\n", dtn);
+        scanf("%d", &ano);
+        snprintf(alunos[id_aluno].DataNascimento, sizeof(alunos[id_aluno].DataNascimento), "%02d.%02d.%04d", dia, mes, ano);
+        fprintf(arquivo, "Data de Nascimento: %s\n", alunos[id_aluno].DataNascimento);
 
         system("cls");
-        printf("Escolha um Curso\n");
-        printf("-----------------------");
-        printf("\nCURSOS DISPONIVEIS\n");
+        printf("Escolha um curso\n");
         printf("-----------------------\n");
-        do{
-            printf("\n1 = Desenvolvimento de sistmeas\n2 = Soldagem\n3 = Eletrotecnico\n4 = Mecatr nica\n");
-            scanf("%d",&cursos);
-            switch (cursos)
-            {
-            case 1:
-                strcpy(alunos[i].curso_do_aluno, "[TC.TI]Desenvolvimento de Sistemas");
-                opf = 1;
-                system("cls");
-                break;
-            case 2:
-                strcpy(alunos[i].curso_do_aluno, "[SOLD]Soldagem");
-                opf = 1;
-                system("cls");
-                break;
-            case 3:
-                strcpy(alunos[i].curso_do_aluno, "[ELET.T]Eletrotecnico");
-                opf = 1;
-                system("cls");
-                break;
-            case 4:
-                strcpy(alunos[i].curso_do_aluno, "[MECA]Mecatr nica");
-                opf = 1;
-                system("cls");
-            default:
-                printf("\n>>Op  o Inv lida<<\n");
-                Sleep(4);
-                opf = 0;
-                break;
+        printf("CURSOS DISPONÍVEIS\n");
+        printf("-----------------------\n");
+        int opf = 0;
+        do {
+            printf("\n1 = Desenvolvimento de Sistemas\n2 = Soldagem\n3 = Eletrotécnico\n4 = Mecatrônica\n");
+            scanf("%d", &cursos);
+            switch (cursos) {
+                case 1:
+                    strcpy(alunos[id_aluno].curso_do_aluno, "[TC.TI]Desenvolvimento de Sistemas");
+                    opf = 1;
+                    break;
+                case 2:
+                    strcpy(alunos[id_aluno].curso_do_aluno, "[SOLD]Soldagem");
+                    opf = 1;
+                    break;
+                case 3:
+                    strcpy(alunos[id_aluno].curso_do_aluno, "[ELET.T]Eletrotécnico");
+                    opf = 1;
+                    break;
+                case 4:
+                    strcpy(alunos[id_aluno].curso_do_aluno, "[MECA]Mecatrônica");
+                    opf = 1;
+                    break;
+                default:
+                    printf("\n>>Opção inválida<<\n");
+                    Sleep(1000);
+                    break;
             }
-        }while(opf == 0);
-        adicionarmaterias(i);
+        } while (opf == 0);
+        adicionarmaterias(id_aluno);
 
-        for (j = 0; j < 3; j++) {
-            fprintf(arquivo, "Mat ria %d: %s\n", j+1, alunos[i].materias[j+1]);
+        for (int j = 0; j < 3; j++) {
+            fprintf(arquivo, "Matéria %d: %s\n", j + 1, alunos[id_aluno].materias[j]);
         }
 
-        int num1,num2;
         char uni[10];
         srand(time(NULL));
-        num1 = rand() % 1000;
-        num2 = (rand() % 9000) + 1000;
+        int num1 = rand() % 1000;
+        int num2 = (rand() % 9000) + 1000;
         snprintf(uni, sizeof(uni), "%d.%d", num1, num2);
-        strncpy(alunos[i].matricula, uni, sizeof(alunos[i].matricula));
-        fprintf(arquivo, "Matr cula: %s\n", alunos[i].matricula);
-        alunos[i].turma[1] = rand() % 999;
-        
-        fprintf(arquivo, "Turma: %d\n", alunos[i].turma);
-        fprintf(arquivo, "Curso: %s\n", alunos[i].curso_do_aluno);
+        strncpy(alunos[id_aluno].matricula, uni, sizeof(alunos[id_aluno].matricula));
+        fprintf(arquivo, "Matrícula: %s\n", alunos[id_aluno].matricula);
+        alunos[id_aluno].turma[0] = rand() % 999;
+        fprintf(arquivo, "Turma: %d\n", alunos[id_aluno].turma[0]);
+        fprintf(arquivo, "Curso: %s\n", alunos[id_aluno].curso_do_aluno);
         fclose(arquivo);
     }
+    totalAlunos += m;
+    system("cls");
 }
 
-void editarcadastro(int alunes){
-	setlocale(LC_ALL, "portuguese");
+void editarcadastro(int alunes) {
+    setlocale(LC_ALL, "portuguese");
     system("cls");
-    int op_e = 0,op_e2 = 0,op_e3 = 0,op_e4 = 0, i;
-    int dia1,mes2,ano3,dtn;
-    do{
-        do{
-            printf("|||Para editar o cadastro escolha a op  o que deseja editar|||\n");
-            printf("[1]Nome || [2]Senha || [3]Endere o || [4]Telefone || [5]Data de Nascimento || [6]Voltar\n");
-            scanf("%d",&op_e2);
-            switch (op_e2)
-            {
+    if (alunes < 0 || alunes >= m || alunos[alunes].nome[0] == '\0') {
+        printf("Aluno inválido.\n");
+        Sleep(2000);
+        return;
+    }
+
+    int op_e = 0;
+    do {
+        printf("|||Para editar o cadastro escolha a opção que deseja editar|||\n");
+        printf("[1] Nome || [2] Senha || [3] Endereço || [4] Telefone || [5] Data de Nascimento || [6] Voltar\n");
+        scanf("%d", &op_e);
+        getchar(); // Limpar buffer
+        switch (op_e) {
             case 1:
-                system("cls" );
-                printf("Seu nome atual ?: %s\n",alunos[alunes].nome);
-                printf("Digite o novo Nome: ");
-                scanf("%s",alunos[alunes].nome);
+                system("cls");
+                printf("Seu nome atual: %s\n", alunos[alunes].nome);
+                printf("Digite o novo nome: ");
+                fgets(alunos[alunes].nome, sizeof(alunos[alunes].nome), stdin);
+                alunos[alunes].nome[strcspn(alunos[alunes].nome, "\n")] = 0;
                 system("cls");
                 break;
             case 2:
                 system("cls");
-                printf("Digite a nova Senha: ");
-                scanf("%s",alunos[alunes].senha);
+                printf("Digite a nova senha: ");
+                fgets(alunos[alunes].senha, sizeof(alunos[alunes].senha), stdin);
+                alunos[alunes].senha[strcspn(alunos[alunes].senha, "\n")] = 0;
                 system("cls");
                 break;
             case 3:
                 system("cls");
-                printf("Seu Endere o atual ?: %s\n",alunos[alunes].endereco);
-                printf("Digite o novo Endere o: ");
-                scanf("%s",alunos[alunes].endereco);
+                printf("Seu endereço atual: %s\n", alunos[alunes].endereco);
+                printf("Digite o novo endereço: ");
+                fgets(alunos[alunes].endereco, sizeof(alunos[alunes].endereco), stdin);
+                alunos[alunes].endereco[strcspn(alunos[alunes].endereco, "\n")] = 0;
                 system("cls");
                 break;
             case 4:
                 system("cls");
-                printf("Seu Telefone atual ?: %s\n",alunos[alunes].telefone);
-                printf("Digite o novo Telefone: ");
-                scanf("%s",alunos[alunes].nome);
-                system("cls"); 
+                printf("Seu telefone atual: %s\n", alunos[alunes].telefone);
+                printf("Digite o novo telefone: ");
+                fgets(alunos[alunes].telefone, sizeof(alunos[alunes].telefone), stdin);
+                alunos[alunes].telefone[strcspn(alunos[alunes].telefone, "\n")] = 0;
+                system("cls");
                 break;
             case 5:
                 system("cls");
-                printf("Sua Data De Nascimento atual ?: %s\n",alunos[alunes].DataNascimento);
-                printf("\nDigite A Data de Nascimento\n");
+                printf("Sua data de nascimento atual: %s\n", alunos[alunes].DataNascimento);
+                printf("Digite a nova data de nascimento\n");
                 printf("Dia: ");
-                scanf("%d",&dia1);
-                printf("\nM s: ");
-                scanf("%d",&mes2);
-                printf("\nAno: ");
-                scanf("%d",&ano3);
-                char dtn[20];
-                snprintf(dtn, sizeof(dtn), "%d.%d.%d", dia1, mes2, ano3);
-                strncpy(alunos[alunes].DataNascimento, dtn, sizeof(alunos[alunes].DataNascimento));
+                scanf("%d", &dia);
+                printf("Mês: ");
+                scanf("%d", &mes);
+                printf("Ano: ");
+                scanf("%d", &ano);
+                snprintf(alunos[alunes].DataNascimento, sizeof(alunos[alunes].DataNascimento), "%02d.%02d.%04d", dia, mes, ano);
                 system("cls");
                 break;
             case 6:
                 system("cls");
-                op_e3 = 1;
-                op_e = 1;
+                op_e = 0;
                 break;
             default:
-                printf("\n\nOp  o Escolhida ? Inv lida");
+                printf("Opção inválida.\n");
+                Sleep(1000);
                 break;
-            }
-        }while (op_e3 == 0);
-    }while (op_e == 0);
+        }
+    } while (op_e != 0);
 }
 
-void suporte(){
-	setlocale(LC_ALL, "portuguese");
+void suporte() {
+    setlocale(LC_ALL, "portuguese");
     system("cls");
-    int op = 0,ops1 = 0,i = 0,turmaescolhida,mudar;
-    int turmas[5];
-    char tempsenha[99];
-    int tmptmp = 0;
-    do{
-        printf("||||||| Bem vindo ao >SUPORTE< |||||||\n\n");
-        printf("[1]Solicitar Mudan a de Turma\n[2] Solicitar Cancelamento de Matricula\n[3]Solicitar Mundan a de Curso\n[4]Outros\n[5]Voltar\n");       
-        scanf("%d",&ops1);
-        switch (ops1)
-        {
-        case 1:
-            system("cls");
-            printf("Sua Turma Atual ?: %d\n",alunos[9].turma[1]);
-            printf("[Escolha uma das Turmas Disponiveis]\n");
-            srand(time(NULL));
-            for(i; i < 4; i++){              
-                turmas[i] = rand() % 999;
-                printf("Turma %d: %d\n",i,turmas[i]);
-            }
-            scanf("%d",&turmaescolhida);
-            alunos[9].turma[1] = turmaescolhida;
-            system("cls");
-            break;
-        
-        case 2:
-            system("cls");
-            printf("Para Solicitar o Cancelamento de Matr cula Digite Sua Senha: ");
-            scanf("%s",&tempsenha);
-            if(strcmp(alunos->senha, tempsenha) == 0){
-                strcpy(alunos->senha, tempsenha);
-                tmptmp = 1;
+    if (id_aluno < 0 || id_aluno >= m || alunos[id_aluno].nome[0] == '\0') {
+        printf("Aluno inválido.\n");
+        Sleep(2000);
+        return;
+    }
+
+    int ops1 = 0;
+    do {
+        printf("||||||| Bem-vindo ao SUPORTE |||||||\n\n");
+        printf("[1] Solicitar mudança de turma\n[2] Solicitar cancelamento de matrícula\n[3] Solicitar mudança de curso\n[4] Outros\n[5] Voltar\n");
+        scanf("%d", &ops1);
+        switch (ops1) {
+            case 1:
                 system("cls");
-            }
-            else{
+                printf("Sua turma atual: %d\n", alunos[id_aluno].turma[0]);
+                printf("[Escolha uma das turmas disponíveis]\n");
+                int turmas[4];
+                for (int i = 0; i < 4; i++) {
+                    turmas[i] = rand() % 999;
+                    printf("Turma %d: %d\n", i, turmas[i]);
+                }
+                int turmaescolhida;
+                scanf("%d", &turmaescolhida);
+                alunos[id_aluno].turma[0] = turmas[turmaescolhida];
+                printf("Mudança de turma solicitada.\n");
+                Sleep(2000);
                 system("cls");
-                printf("Senha Digitada Est  Incorreta, Tente Novamente em 4 Segundos");
-                Sleep(4000);
+                break;
+            case 2:
                 system("cls");
-            }
-            break;
-        case 3:
-            system("cls");
-            printf("Tem Certeza que Deseja Mudar de Curso? [1]Sim [2]N o\n");
-            scanf("%d",&mudar);
-            if(mudar == 1){
+                printf("Para solicitar o cancelamento de matrícula, digite sua senha: ");
+                char tempsenha[99];
+                scanf("%s", tempsenha);
+                if (strcmp(alunos[id_aluno].senha, tempsenha) == 0) {
+                    printf("Cancelamento de matrícula solicitado.\n");
+                    Sleep(2000);
+                    system("cls");
+                } else {
+                    printf("Senha incorreta. Tente novamente.\n");
+                    Sleep(2000);
+                    system("cls");
+                }
+                break;
+            case 3:
                 system("cls");
-                printf("\nA Mudan a de Curso s  Pode Ser Feita Pela Administra  o\nSua Solicita oo Foi Guardada com um Prazo de 3 dias  teis Para ser Validada");
-                Sleep(4000);
+                printf("Tem certeza que deseja mudar de curso? [1] Sim [2] Não\n");
+                int mudar;
+                scanf("%d", &mudar);
+                if (mudar == 1) {
+                    printf("A mudança de curso só pode ser feita pela administração.\n");
+                    printf("Sua solicitação foi registrada com prazo de 3 dias úteis.\n");
+                    Sleep(4000);
+                    system("cls");
+                } else {
+                    printf("Mudança cancelada.\n");
+                    Sleep(2000);
+                    system("cls");
+                }
+                break;
+            case 4:
                 system("cls");
-            }
-            else{
-                printf("\nMudan a Cancelada");
-            }
-        break;
-        case 4:
-            system("cls");
-            printf("Caso Tenha outra D vida ou Solicita  o Digite aqui (Seja Breve)\n");
-            scanf("%s",&solicitar_e);
-            system("cls");
-            break;
-        case 5:
-            system("cls");
-            op = 1;
-        default:
-            break;
+                printf("Digite sua solicitação (seja breve): ");
+                getchar();
+                fgets(solicitar_e, sizeof(solicitar_e), stdin);
+                solicitar_e[strcspn(solicitar_e, "\n")] = 0;
+                printf("Solicitação registrada: %s\n", solicitar_e);
+                Sleep(2000);
+                system("cls");
+                break;
+            case 5:
+                system("cls");
+                ops1 = 0;
+                break;
+            default:
+                printf("Opção inválida.\n");
+                Sleep(1000);
+                break;
         }
-    }while(op == 0);
+    } while (ops1 != 0);
 }
 
 void limparBuffer() {
