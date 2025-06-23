@@ -7,51 +7,56 @@
 #include <windows.h>
 #include "declaracoes.h"
 
-int main(){
+int main() {
     setlocale(LC_ALL, "portuguese");
+    srand(time(NULL)); // Inicializar gerador de números aleatórios
+
     int opcaoin = 0;
-    char op_cadastro;
+    char op_cadastro[2];
 
     do {
-        while (opcaoin == 0) {                    
+        while (opcaoin == 0) {
             printf("\n========== MENU ESCOLA ==========\n");
-            printf("Op\xC7\xC3o Desejada?\n >>[C]Cadastro<< || >>[L]Login<< || >>[A]ADM\n");
-            limparBuffer();
-            op_cadastro = getchar();
-            limparBuffer();
+            printf("Opção desejada?\n >>[C]Cadastro<< || >>[L]Login<< || >>[A]ADM\n");
+            fgets(op_cadastro, sizeof(op_cadastro), stdin);
+            op_cadastro[strcspn(op_cadastro, "\n")] = 0;
 
-            switch (op_cadastro) {
+            switch (op_cadastro[0]) {
                 case 'l':
-                    printf("Op\xC7\xC3o Secreta Ativada..\nAutoDestrui\xC7\xC3o do PC Iniciada...");
-                    Sleep(4000);
+                case 'L':
+                    printf("Por favor, use [C] para cadastro ou [A] para ADM.\n");
+                    Sleep(2000);
                     system("cls");
                     break;
-
                 case 'c':
                 case 'C':
                     cadastro();
                     opcaoin = 1;
                     Sleep(40);
                     break;
-
                 case 'a':
                 case 'A':
                     system("cls");
-                    printf("Login Administrador\n");              
-                    printf("Digite o Nome: ");              
-                    scanf("%s", adn);
-                    printf("Digite A Senha: ");
-                    scanf("%s", ads);
-
+                    printf("Login Administrador\n");
+                    printf("Digite o Nome: ");
+                    fgets(adn, sizeof(adn), stdin);
+                    adn[strcspn(adn, "\n")] = 0;
+                    printf("Digite a Senha: ");
+                    fgets(ads, sizeof(ads), stdin);
+                    ads[strcspn(ads, "\n")] = 0;
                     if (strcmp(adn, ADM) == 0 && strcmp(ads, ADMS) == 0) {
                         opcaoin = 1;
                         admin = true;
                     } else {
+                        printf("Nome ou senha incorretos.\n");
+                        Sleep(2000);
+                        system("cls");
                         opcaoin = 0;
                     }
                     break;
-
                 default:
+                    printf("Opção inválida. Tente novamente.\n");
+                    Sleep(2000);
                     system("cls");
                     break;
             }
@@ -59,97 +64,138 @@ int main(){
 
         if (admin == false) {
             system("cls");
-            printf("----------------Portal Do Aluno----------------\n\n");
-            printf("[1] ||Notas||\n");
-            printf("[2] ||Ver Cadastro||\n");
-            printf("[3] ||Editar Cadastro||\n");
-            printf("[4] ||Suporte||\n");
-            printf("[5] ||SAIR||\n");
-            printf("[6] ||FECHAR||\n");
-            printf("Escolha uma op\xC3\xA7\xC3\xA3o: ");
+            printf("----------------Portal do Aluno----------------\n\n");
+            printf("[1] Notas\n");
+            printf("[2] Ver Cadastro\n");
+            printf("[3] Editar Cadastro\n");
+            printf("[4] Suporte\n");
+            printf("[5] Sair\n");
+            printf("[6] Fechar\n");
+            printf("Escolha uma opção: ");
             scanf("%d", &opcao);
+            limparBuffer();
+
+            switch (opcao) {
+                case 1:
+                    if (id_aluno >= 0 && id_aluno < m && alunos[id_aluno].nome[0] != '\0') {
+                        vernotas();
+                    } else {
+                        printf("Nenhum aluno selecionado.\n");
+                        Sleep(2000);
+                        system("cls");
+                    }
+                    break;
+                case 2:
+                    if (id_aluno >= 0 && id_aluno < m && alunos[id_aluno].nome[0] != '\0') {
+                        exibirAlunos();
+                    } else {
+                        printf("Nenhum aluno selecionado.\n");
+                        Sleep(2000);
+                        system("cls");
+                    }
+                    break;
+                case 3:
+                    if (id_aluno >= 0 && id_aluno < m && alunos[id_aluno].nome[0] != '\0') {
+                        editarcadastro(id_aluno);
+                    } else {
+                        printf("Nenhum aluno selecionado.\n");
+                        Sleep(2000);
+                        system("cls");
+                    }
+                    break;
+                case 4:
+                    if (id_aluno >= 0 && id_aluno < m && alunos[id_aluno].nome[0] != '\0') {
+                        suporte();
+                    } else {
+                        printf("Nenhum aluno selecionado.\n");
+                        Sleep(2000);
+                        system("cls");
+                    }
+                    break;
+                case 5:
+                    system("cls");
+                    opcaoin = 0;
+                    break;
+                case 6:
+                    printf("Encerrando o programa...\n");
+                    Sleep(1000);
+                    opc4 = 5;
+                    break;
+                default:
+                    printf("Opção inválida.\n");
+                    Sleep(1000);
+                    system("cls");
+                    break;
+            }
         } else {
             system("cls");
-            printf("----------------Portal Do Administrador---------------\n\n");
-            printf("[1] ||Lan\xC3\xA7ar Notas||\n"); 
-            printf("[2] ||Cadastrar Alunos||\n");
-            printf("[3] ||Editar Cadastros||\n");
-            printf("[4] ||Listar Alunos||\n");
-            printf("[5] ||SAIR||\n"); 
-            printf("[6] ||FECHAR||\n");
-            printf("Escolha uma op\xC3\xA7\xC3\xA3o: ");
+            printf("----------------Portal do Administrador---------------\n\n");
+            printf("[1] Lançar Notas\n");
+            printf("[2] Cadastrar Alunos\n");
+            printf("[3] Editar Cadastros\n");
+            printf("[4] Listar Alunos\n");
+            printf("[5] Sair\n");
+            printf("[6] Fechar\n");
+            printf("Escolha uma opção: ");
             scanf("%d", &opcao);
-        }
+            limparBuffer();
 
-        switch (opcao) {
-            case 1:
-                if (admin == false) {
-                    vernotas();
-                } else {
+            switch (opcao) {
+                case 1:
                     lancar_notas();
-                }
-                break;
-
-            case 2:
-                if (admin == false) {                   
-                    system("cls");
-                    do {
-                        exibirAlunos();
-                    } while (opcaoin2 == true);
-                } else {
+                    break;
+                case 2:
                     cadastro();
-                }
-                break;
-
-            case 3:
-                if (admin == false) {
-                    editarcadastro(p);
-                } else {
-                    if (alunos[0].nome[0] == '\0') {
-                        printf("\xC3\x89 Necess\xC3\xA1rio Mais de um aluno para isto");
-                        Sleep(4000);
-                    } else {                          
-                        printf("De Qual Aluno Deseja Editar Cadastro? Digite o Numero Correspondente\n");
-                        for (i = 0; i < m; i++) {
-                            printf("\nAluno[%d]: %s", i, alunos[i].nome);
-                        }
-                        printf("\n");
-                        scanf("%d", &p);
-                        editarcadastro(p);
-                    }
-                }
-                break;
-
-            case 4:
-                if (admin == false) {
-                    suporte();
-                } else {
-                    if (alunos[0].nome[0] == '\0') {
-                        printf("\xC3\x89 Necess\xC3\xA1rio Mais de um aluno para isto");
-                        Sleep(4000);
-                    } else {
+                    break;
+                case 3:
+                    if (m <= 0) {
+                        printf("É necessário pelo menos um aluno cadastrado.\n");
+                        Sleep(2000);
                         system("cls");
+                    } else {
+                        printf("De qual aluno deseja editar o cadastro? Digite o número correspondente:\n");
+                        for (int i = 0; i < m; i++) {
+                            printf("Aluno[%d]: %s\n", i, alunos[i].nome);
+                        }
+                        scanf("%d", &p);
+                        limparBuffer();
+                        if (p >= 0 && p < m && alunos[p].nome[0] != '\0') {
+                            editarcadastro(p);
+                        } else {
+                            printf("Aluno inválido.\n");
+                            Sleep(2000);
+                            system("cls");
+                        }
+                    }
+                    break;
+                case 4:
+                    if (m <= 0) {
+                        printf("É necessário pelo menos um aluno cadastrado.\n");
+                        Sleep(2000);
+                        system("cls");
+                    } else {
                         ordenarAlunosPorNome();
                         Sleep(5000);
+                        system("cls");
                     }
-                }
-                break;
-
-            case 5:
-                system("cls");
-                opcaoin = 0;
-                limparBuffer();
-                break;
-
-            case 6:
-                opc4 = 5;
-                break;
-
-            default:
-                printf("Op\xC3\xA7\xC3\xA3o Inv\xC3\xA1lida\n");
-                break;
+                    break;
+                case 5:
+                    system("cls");
+                    opcaoin = 0;
+                    admin = false;
+                    break;
+                case 6:
+                    printf("Encerrando o programa...\n");
+                    Sleep(1000);
+                    opc4 = 5;
+                    break;
+                default:
+                    printf("Opção inválida.\n");
+                    Sleep(1000);
+                    system("cls");
+                    break;
+            }
         }
-
     } while (opc4 != 5);
 
     return 0;
