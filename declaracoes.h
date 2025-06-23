@@ -1,22 +1,18 @@
-#ifndef declaracoes_h
-#define declaracoes_h
+#ifndef DECLARACOES_H
+#define DECLARACOES_H
 #define MAX_ALUNOS 100
 #include <stdbool.h>
 
-// Inteiros
-extern int dia, mes, ano, opcao,opcaog, matricula, cursos, totalAlunos, m;
-// Def Temporaria
-extern char materia[99],nome[50], solicitar_e[99], ADM[10], ADMS[10];
-// Boleanas para condicionas
+// Variáveis globais necessárias
+extern int dia, mes, ano, opcao, opcaog, cursos, totalAlunos, m, id_aluno;
+extern char materia[99], nome[50], solicitar_e[99], ADM[10], ADMS[10];
 extern bool opcaoin2, admin;
-// variaveis que estao dentro do main
-extern int p,i,opc4,opp4,opf;
-extern char adn[8], ads[8];
 
+// Declarações de funções
 void exibirAlunos();
 void ordenarAlunosPorNome();
-void adicionarmaterias();
-float calcularnotas();
+void adicionarmaterias(int i);
+float calcularnotas(int aluno_idx);
 void lancar_notas();
 void vernotas();
 void cadastro();
@@ -24,7 +20,7 @@ void editarcadastro(int alunes);
 void suporte();
 void limparBuffer();
 
-// Ana esse é o struct dos alunos
+// Struct dos alunos
 typedef struct {
     char nome[50];
     char senha[99];
@@ -35,9 +31,7 @@ typedef struct {
     char matricula[99];
     char materias[3][99];
     float notas[4];
-    int turma[99]; 
-    float media[99];
-    char status[15];
+    int turma; // Simplificado de int turma[99]
 } Aluno;
 extern Aluno alunos[MAX_ALUNOS];
 
